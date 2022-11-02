@@ -1,6 +1,6 @@
 <?php
-require_once '.app/models/games.model.php';
-require_once '.app/views/games.view.php';
+require_once './app/models/games.model.php';
+require_once './app/views/games.view.php';
 
 class GamesApiController
 {
