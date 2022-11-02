@@ -2,14 +2,14 @@
 
 class GamesApiView
 {
-public function response($data, $status = 200){
+  public function response($data, $status = 200) {
     header("Content-Type: application/json");
-    header("HTTP/1.1" . $status . " " . $this->_requestStatus($status));
-
-    echo json_encode($data);
-
+    header("HTTP/1.1 " . $status . " " . $this->_requestStatus($status));
     
+    // convierte los datos a un formato json
+    echo json_encode($data);
 }
+
 private function _requestStatus($code){
     $status = array(
       200 => "OK",
@@ -20,6 +20,5 @@ private function _requestStatus($code){
     );
     return (isset($status[$code])) ? $status[$code] : $status[500];
   }
-
 
 }

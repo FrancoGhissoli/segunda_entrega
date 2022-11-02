@@ -12,5 +12,10 @@ class GamesApiModel{
         $games = $query-> fetchAll(PDO::FETCH_OBJ);
         return $games;
     }
-
+    public function getgamebyid($id){
+        $query = $this->db->prepare("SELECT * FROM games WHERE id = ?");
+        $query->execute([$id]);
+        $games = $query-> fetch(PDO::FETCH_OBJ);
+        return $games;
+    }
 }
