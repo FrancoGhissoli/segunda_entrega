@@ -34,7 +34,6 @@ class GamesApiController
     // }
     public function getGames($params = null)
     {
-
         $games = $this->model->getAllGames();
         $this->view->response($games);
     }
@@ -51,15 +50,16 @@ class GamesApiController
     public function deleteGame($params = null)
     {
         $id = $params[':ID'];
-        $game = $this->getGame($id);
+        $game = $this->model->getgamebyid($id);
+       
         if ($game) {
             $this->model->deleteGameById($id);
             $this->view->response("El juego se elimino correctamente", 200);
+            $this->view->response($game);
+           
         } else {
             $this->view->response("El juego que se quiere eliminar no existe(id:$id)", 404);
         }
     }
-    public function addGame()
-    {
-    }
+   
 }
