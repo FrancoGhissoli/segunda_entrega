@@ -15,22 +15,22 @@ class GamesApiModel
         $games = $query->fetchAll(PDO::FETCH_OBJ);
         return $games;
     }
-    // public function getAllGamesByOrder($order = null)
-    // {
-    //     if (!empty($order)) {
-    //         if ($order == "DESC" || $order == "desc") {
-    //             $query = $this->db->prepare("SELECT * FROM `games` ORDER BY Nombre DESC");
-    //             $query->execute();
-    //             $gamesorder = $query->fetchAll(PDO::FETCH_OBJ);
-    //             return $gamesorder;
-    //         } else if ($order == "ASC" || $order == "asc") {
-    //             $query = $this->db->prepare("SELECT * FROM `games` ORDER BY Nombre ASC");
-    //             $query->execute();
-    //             $gamesorder = $query->fetchAll(PDO::FETCH_OBJ);
-    //             return $gamesorder;
-    //         }
-    //     }
-    //     }
+    public function getAllGamesByOrder($order = null)
+    {
+        if (!empty($order)) {
+            if ($order == "DESC" || $order == "desc") {
+                $query = $this->db->prepare("SELECT * FROM `games` ORDER BY Nombre DESC");
+                $query->execute();
+                $gamesorder = $query->fetchAll(PDO::FETCH_OBJ);
+                return $gamesorder;
+            } else if ($order == "ASC" || $order == "asc") {
+                $query = $this->db->prepare("SELECT * FROM `games` ORDER BY Nombre ASC");
+                $query->execute();
+                $gamesorder = $query->fetchAll(PDO::FETCH_OBJ);
+                return $gamesorder;
+            }
+        }
+        }
             public function getgamebyid($id){
                 $query = $this->db->prepare("SELECT * FROM games WHERE id = ?");
                 $query->execute([$id]);
@@ -41,4 +41,9 @@ class GamesApiModel
                 $query = $this->db->prepare('DELETE FROM games WHERE id = ?');
                 $query-> execute([$id]);
             }
-    }
+            public function addNewGame($Nombre, $Descripcion, $Anio, $id_genero){
+                $query = $this->db->prepare("INSERT INTO games (Nombre, Descripcion, Anio, id_genero) VALUES (?,?,?,?)");
+                $query->execute([$Nombre,$Descripcion,$Anio,$id_genero]);
+                return $this->db->lastInsertId();
+            }
+        }

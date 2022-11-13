@@ -4,9 +4,9 @@ class GamesApiView
 {
   public function response($data, $status = 200) {
     header("Content-Type: application/json");
-    header("HTTP/1.1 " . $status . " " . $this->_requestStatus($status));
+        header("HTTP/1.1 " . $status . " " . $this->_requestStatus($status));
     
-    // convierte los datos a un formato json
+ 
     echo json_encode($data);
 }
 
