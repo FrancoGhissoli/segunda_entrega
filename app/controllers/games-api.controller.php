@@ -19,24 +19,36 @@ class GamesApiController
     {
         return json_decode($this->data);
     }
-    public function getGamesByorder($params = null)
-    {
-        if(!empty($params[':order'])){
-            $order = $params[':order'];
-        if($order == "DESC" || $order == "desc"){
-            $gamesorder = $this->model->getAllGamesByOrder($order);
-            $this->view->response($gamesorder);
-        }else if($order == "ASC" || $order == "asc"){
-            $gamesorder = $this->model->getAllGamesByOrder($order);
-            $this->view->response($gamesorder);
-    }
-    }
-    }
+
     public function getGames($params = null)
-    {
+    {   if (!empty($_GET['orderby'])){
+        $this->getByOrder();
+    }else{
         $games = $this->model->getAllGames();
         $this->view->response($games);
     }
+}
+    public function getByOrder(){
+        if(!empty($_GET ['orderby'])){
+            if($_GET['orderby'] == "asc" || $_GET['orderby'] == "ASC" ){
+            $games=  $this->model->getAllGamesByOrder();
+            $this->view->response($games);
+        }
+        
+        else if($_GET ['orderby'] == "desc" || $_GET ['orderby'] == "DESC") {
+            $games=  $this->model->getAllGamesByOrderDesc();
+            $this->view->response($games);
+        }
+        else ($_GET['orderby'] == !"asc" || $_GET['orderby'] == !"ASC" || $_GET ['orderby'] == !"desc" || $_GET ['orderby'] == !"DESC" );{
+            return $this->view->response("Vuelva a escribir el orderby(verifique la documentacion)",400);
+       
+       
+        }
+        
+        
+    }  
+}
+
     public function getGame($params = null)
     {
         $id = $params[':ID'];
@@ -51,25 +63,25 @@ class GamesApiController
     {
         $id = $params[':ID'];
         $games = $this->model->getgamebyid($id);
-       
+
         if ($games) {
             $this->model->deleteGameById($id);
             $this->view->response("El juego se elimino correctamente", 200);
             $this->view->response($games);
-           
         } else {
             $this->view->response("El juego que se quiere eliminar no existe(id:$id)", 404);
         }
     }
-   public function addGame($params = null){
+    public function addGame($params = null)
+    {
         $games = $this->getData();
-       
-        if(empty($games->Nombre)|| empty($games->Descripcion) || empty($games->Anio) || empty($games->id_genero)){
-            $this->view->response("Complete todos los datos (Campos) y vuelva a intentarlo", 400);}
-        else{
-            $id = $this->model->addNewGame($games->Nombre ,$games->Descripcion, $games->Anio, $games->id_genero);
+
+        if (empty($games->Nombre) || empty($games->Descripcion) || empty($games->Anio) || empty($games->id_genero)) {
+            $this->view->response("Complete todos los datos (Campos) y vuelva a intentarlo", 400);
+        } else {
+            $id = $this->model->addNewGame($games->Nombre, $games->Descripcion, $games->Anio, $games->id_genero);
             $games = $this->model->getgamebyid($id);
             $this->view->response("Se agrego la informacion del Juego corectamente", 201);
+        }
     }
-}
 }

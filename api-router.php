@@ -7,12 +7,12 @@ $router = new Router();
 
 // defina la tabla de ruteo
 $router->addRoute('games', 'GET', 'GamesApiController', 'getGames');
-// $router->addRoute('games/:ID', 'GET', 'GamesApiController', 'getGame');
+$router->addRoute('games/:ID', 'GET', 'GamesApiController', 'getGame');
 $router->addRoute('games/:ID', 'DELETE', 'GamesApiController', 'deleteGame');
-$router->addRoute('games', 'POST', 'GamesAPIController', 'addGame'); 
+$router->addRoute('games', 'POST', 'GamesAPIController', 'addGame');
 
 
-$router->addRoute('games/', 'GET', ':order','GamesApiController', 'getGamesByorder');
+
 
 
 // ejecuta la ruta (sea cual sea)
