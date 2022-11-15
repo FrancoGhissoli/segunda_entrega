@@ -87,7 +87,7 @@ class GamesApiController
         if($games){
             $this->model->editGameById($gameedit->Nombre, $gameedit->Descripcion, $gameedit->Anio, $gameedit->id_genero, $id); 
             $this->view->response("La Informacion del Juego se edito correctamente", 200);
-            $games = $this->model->getgamebyid($id);
+            
         }
         else {
             $this->view->response("La informacion no es correcta o no se encontro el producto con el id", 404);
