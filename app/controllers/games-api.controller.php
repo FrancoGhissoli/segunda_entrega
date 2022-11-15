@@ -75,7 +75,9 @@ class GamesApiController
         } else {
             $id = $this->model->addNewGame($games->Nombre, $games->Descripcion, $games->Anio, $games->id_genero);
             $games = $this->model->getgamebyid($id);
+           
             $this->view->response("Se agrego la informacion del Juego corectamente", 201);
+            $this->view->response($games);
         }
     }
     public function editGame($params = null)
@@ -87,7 +89,7 @@ class GamesApiController
         if($games){
             $this->model->editGameById($gameedit->Nombre, $gameedit->Descripcion, $gameedit->Anio, $gameedit->id_genero, $id); 
             $this->view->response("La Informacion del Juego se edito correctamente", 200);
-            
+            $this->view->response($gameedit);
         }
         else {
             $this->view->response("La informacion no es correcta o no se encontro el producto con el id", 404);
