@@ -10,7 +10,7 @@ $router->addRoute('games', 'GET', 'GamesApiController', 'getGames');
 $router->addRoute('games/:ID', 'GET', 'GamesApiController', 'getGame');
 $router->addRoute('games/:ID', 'DELETE', 'GamesApiController', 'deleteGame');
 $router->addRoute('games', 'POST', 'GamesAPIController', 'addGame');
-
+$router->addRoute('games/:ID', 'PUT', 'GamesAPIController', 'editGame');
 
 
 

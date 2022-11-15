@@ -21,33 +21,27 @@ class GamesApiController
     }
 
     public function getGames($params = null)
-    {   if (!empty($_GET['orderby'])){
-        $this->getByOrder();
-    }else{
-        $games = $this->model->getAllGames();
-        $this->view->response($games);
+    {
+        if (!empty($_GET['orderby'])) {
+            $this->getByOrder();
+        } else {
+            $games = $this->model->getAllGames();
+            $this->view->response($games);
+        }
     }
-}
-    public function getByOrder(){
-        if(!empty($_GET ['orderby'])){
-            if($_GET['orderby'] == "asc" || $_GET['orderby'] == "ASC" ){
-            $games=  $this->model->getAllGamesByOrder();
-            $this->view->response($games);
+    public function getByOrder()
+    {
+        if (!empty($_GET['orderby'])) {
+            if ($_GET['orderby'] == "asc" || $_GET['orderby'] == "ASC") {
+                $games =  $this->model->getAllGamesByOrder();
+                return $this->view->response($games);
+            } else if ($_GET['orderby'] == "desc" || $_GET['orderby'] == "DESC") {
+                $games =  $this->model->getAllGamesByOrderDesc();
+                return $this->view->response($games);
+            }
+            return $this->view->response("Vuelva a escribir el orderby(verifique la documentacion)", 400);
         }
-        
-        else if($_GET ['orderby'] == "desc" || $_GET ['orderby'] == "DESC") {
-            $games=  $this->model->getAllGamesByOrderDesc();
-            $this->view->response($games);
-        }
-        else ($_GET['orderby'] == !"asc" || $_GET['orderby'] == !"ASC" || $_GET ['orderby'] == !"desc" || $_GET ['orderby'] == !"DESC" );{
-            return $this->view->response("Vuelva a escribir el orderby(verifique la documentacion)",400);
-       
-       
-        }
-        
-        
-    }  
-}
+    }
 
     public function getGame($params = null)
     {
@@ -83,5 +77,21 @@ class GamesApiController
             $games = $this->model->getgamebyid($id);
             $this->view->response("Se agrego la informacion del Juego corectamente", 201);
         }
+    }
+    public function editGame($params = null)
+    {
+        $id = $params[':ID'];
+        $games = $this->model->getgamebyid($id);
+        $gameedit= $this->getData();
+
+        if($games){
+            $this->model->editGameById($gameedit->Nombre, $gameedit->Descripcion, $gameedit->Anio, $gameedit->id_genero, $id); 
+            $this->view->response("La Informacion del Juego se edito correctamente", 200);
+            $games = $this->model->getgamebyid($id);
+        }
+        else {
+            $this->view->response("La informacion no es correcta o no se encontro el producto con el id", 404);
+        }
+
     }
 }

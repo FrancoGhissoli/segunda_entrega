@@ -54,4 +54,9 @@ class GamesApiModel
         $games = $query->fetchAll(PDO::FETCH_OBJ);
         return $games;
     }
+    public function editGameById($Nombre,$Descripcion,$Anio,$id_genero,$id){
+        $query = $this->db->prepare("UPDATE `games` SET Nombre = ? , Descripcion = ? , Anio = ? , id_genero = ?, WHERE id = ?");
+        $query->execute([$Nombre,$Descripcion,$Anio,$id_genero,$id]);
+    }
+    
 }
