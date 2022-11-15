@@ -57,7 +57,6 @@ class GamesApiController
     {
         $id = $params[':ID'];
         $games = $this->model->getgamebyid($id);
-
         if ($games) {
             $this->model->deleteGameById($id);
             $this->view->response("El juego se elimino correctamente", 200);
@@ -69,13 +68,11 @@ class GamesApiController
     public function addGame($params = null)
     {
         $games = $this->getData();
-
         if (empty($games->Nombre) || empty($games->Descripcion) || empty($games->Anio) || empty($games->id_genero)) {
             $this->view->response("Complete todos los datos (Campos) y vuelva a intentarlo", 400);
         } else {
             $id = $this->model->addNewGame($games->Nombre, $games->Descripcion, $games->Anio, $games->id_genero);
             $games = $this->model->getgamebyid($id);
-           
             $this->view->response("Se agrego la informacion del Juego corectamente", 201);
             $this->view->response($games);
         }
@@ -85,7 +82,6 @@ class GamesApiController
         $id = $params[':ID'];
         $games = $this->model->getgamebyid($id);
         $gameedit= $this->getData();
-
         if($games){
             $this->model->editGameById($gameedit->Nombre, $gameedit->Descripcion, $gameedit->Anio, $gameedit->id_genero, $id); 
             $this->view->response("La Informacion del Juego se edito correctamente", 200);
